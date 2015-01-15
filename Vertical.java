@@ -11,14 +11,13 @@ public class Vertical extends Road{
 		
 	}
 	public void spawnCars(int space, int x, int y, int rotate, int road, int a){
-		y = gen.nextInt(space);
+		y = 0;
 		x = road + offset;
 		TrafficWorld.car[a] = new Car();
 		getWorld().addObject(TrafficWorld.car[a], x, y);
-		System.out.println(x +" " + y);
 		TrafficWorld.car[a].setRotation(rotate - 180);
 		x += DISTANCE;
-		y = gen.nextInt(space);
+		y = length;
 		a ++;
 		TrafficWorld.car[a] = new Car();
 		getWorld().addObject(TrafficWorld.car[a], x, y);
