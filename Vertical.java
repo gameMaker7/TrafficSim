@@ -15,12 +15,14 @@ public class Vertical extends Road{
 		x = road + offset;
 		TrafficWorld.car[a] = new Car();
 		getWorld().addObject(TrafficWorld.car[a], x, y);
+		TrafficWorld.car[a].state = Direction.SOUTH;
 		TrafficWorld.car[a].setRotation(rotate - 180);
 		x += DISTANCE;
 		y = length;
 		a ++;
 		TrafficWorld.car[a] = new Car();
 		getWorld().addObject(TrafficWorld.car[a], x, y);
+		TrafficWorld.car[a].state = Direction.NORTH;
 		TrafficWorld.car[a].setRotation(rotate);
 
 	}	

@@ -7,15 +7,15 @@ import greenfoot.Actor;
 
 public class Car extends Actor implements TrafficControl{
 	Random gen = new Random();
-	int car = gen.nextInt(4);
-	int speed = gen.nextInt(5) + 1;
-	int offset = 5;
-	int length = TrafficWorld.WORLDWIDTH - offset;
-	int width = TrafficWorld.WORLDHEIGHT - offset;
-	boolean slow = false;
-	boolean speedUp = false;
+	private int car = gen.nextInt(4);
+	private int speed = gen.nextInt(5) + 1;
+	Direction state = Direction.EAST;
+	private int offset = 5;
+	private int length = TrafficWorld.WORLDWIDTH - offset;
+	private int width = TrafficWorld.WORLDHEIGHT - offset;
+	private boolean move;
+	private Light go;
 
-	private enum Range{FAR, APPROACHING, CLOSE}
 	public Car(){
 		switch(car){
 		case 0: this.setImage("images/topCarYellow.png");
@@ -37,22 +37,68 @@ public class Car extends Actor implements TrafficControl{
 
 		move(speed);
 
-
-
-	}
-	@Override
-	public void approacking() {
-		if(!slow){speed = 1;
+		if(move){
+			if(go == Light.GREEN){
+				speed = gen.nextInt(5) + 1;
+				move = false;
+			}
 		}
-		slow = true;
-		}
+
+	}	
 	@Override
-	public void entering() {
-		speedUp = true;
+	public void entering(Intersection x){
+		if(state == Direction.EAST || state == Direction.WEST){
+			go = x.hState;
+			switch(x.hState){
+			case RED: 
+				speed = 0;
+				move = true;
+				break;
+			default:
+				break;
+			}
+			if(state == Direction.NORTH || state == Direction.SOUTH){
+				go = x.vState;
+				switch(x.vState){
+				case RED: 
+					speed = 0;
+					move = true;
+					break;
+				default:
+					break;
+				}
+			}
+		}		
 	}
 
 	@Override
 	public void leaving() {
-		slow = false;
+	}
+	@Override
+	public void approaching(Intersection x) {
+		if(state == Direction.EAST || state == Direction.WEST){
+			switch(x.hState){
+			case YELLOW:
+				speed = 1;
+				break;
+			case RED: 
+				speed = 1;
+				break;
+			default:
+				break;
+			}
+			if(state == Direction.NORTH || state == Direction.SOUTH){
+				switch(x.vState){
+				case YELLOW:
+					speed = 1;
+					break;
+				case RED: 
+					speed = 1;
+					break;
+				default:
+					break;
+				}
+			}		
+		}
 	}
 }

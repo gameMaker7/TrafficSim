@@ -7,13 +7,13 @@ import greenfoot.World;
 
 public class TrafficWorld extends World{
 
-	final static int WORLDWIDTH = 1500;
-	final static int WORLDHEIGHT = 900;
+	final static int WORLDWIDTH = 1000;
+	final static int WORLDHEIGHT = 750;
 	final static int CELL = 1;
 	final static int ROADWIDTH = 50;
 	final static int DISTANCE = 25;
-	final static int HROADS = 5;
-	final static int VROADS = 7;
+	final static int HROADS = 3;
+	final static int VROADS = 3;
 	final static int HOFFSET = (WORLDWIDTH - ROADWIDTH) / (VROADS - 1); 
 	final static int VOFFSET = (WORLDHEIGHT - ROADWIDTH) / (HROADS - 1); 
 	int YroadStart = 0;
@@ -64,7 +64,7 @@ public class TrafficWorld extends World{
 		Intersection[] intersect = new Intersection[VROADS * HROADS];
 		for( i = 0; i<VROADS ; i ++){
 			for( a = 0; a < HROADS ; a ++){
-				intersect[x] = new Intersection();
+				intersect[x] = new Intersection(vroad[i].getX(), hroad[a].getY() + DISTANCE);
 				this.addObject(intersect[x],vroad[i].getX(), hroad[a].getY() + DISTANCE);
 				intersect[x].lights();
 			}
