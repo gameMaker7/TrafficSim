@@ -12,8 +12,8 @@ public class TrafficWorld extends World{
 	final static int CELL = 1;
 	final static int ROADWIDTH = 50;
 	final static int DISTANCE = 25;
-	final static int HROADS = 3;
-	final static int VROADS = 3;
+	final static int HROADS = 5;
+	final static int VROADS = 7;
 	final static int HOFFSET = (WORLDWIDTH - ROADWIDTH) / (VROADS - 1); 
 	final static int VOFFSET = (WORLDHEIGHT - ROADWIDTH) / (HROADS - 1); 
 	int YroadStart = 0;
@@ -58,6 +58,11 @@ public class TrafficWorld extends World{
 		}
 	}
 	public void spawnIntersect(){
+//		addObject(TrafficWorld.car[a], 500, 0);
+//		TrafficWorld.car[a].setRotation(-90);
+//		TrafficWorld.car[a].state = Direction.NORTH;
+
+
 		int i = 0;
 		int a = 0;
 		int x = ((i + 1) * (a + 1)) + 1;

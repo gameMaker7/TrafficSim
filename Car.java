@@ -13,8 +13,9 @@ public class Car extends Actor implements TrafficControl{
 	private int offset = 5;
 	private int length = TrafficWorld.WORLDWIDTH - offset;
 	private int width = TrafficWorld.WORLDHEIGHT - offset;
-	private boolean move;
-	private Light go;
+	private boolean move1;
+	private Intersection go;
+	private boolean move2;
 
 	public Car(){
 		switch(car){
@@ -37,10 +38,17 @@ public class Car extends Actor implements TrafficControl{
 
 		move(speed);
 
-		if(move){
-			if(go == Light.GREEN){
+		if(move1){
+			System.out.println(1);
+			if(go.hState == Light.GREEN){
 				speed = gen.nextInt(5) + 1;
-				move = false;
+				move1 = false;
+			}
+		}
+		if(move2){
+			if(go.vState == Light.GREEN){
+				speed = gen.nextInt(5) + 1;
+				move2 = false;
 			}
 		}
 
@@ -48,21 +56,17 @@ public class Car extends Actor implements TrafficControl{
 	@Override
 	public void entering(Intersection x){
 		if(state == Direction.EAST || state == Direction.WEST){
-			go = x.hState;
 			switch(x.hState){
 			case RED: 
 				speed = 0;
-				move = true;
 				break;
 			default:
 				break;
 			}
 			if(state == Direction.NORTH || state == Direction.SOUTH){
-				go = x.vState;
 				switch(x.vState){
 				case RED: 
 					speed = 0;
-					move = true;
 					break;
 				default:
 					break;
@@ -76,29 +80,37 @@ public class Car extends Actor implements TrafficControl{
 	}
 	@Override
 	public void approaching(Intersection x) {
+		System.out.println(1);
 		if(state == Direction.EAST || state == Direction.WEST){
+			go = x;
 			switch(x.hState){
 			case YELLOW:
 				speed = 1;
+				move1 = true;
 				break;
 			case RED: 
-				speed = 1;
+				speed = 0;
+				move1 = true;
 				break;
 			default:
 				break;
 			}
-			if(state == Direction.NORTH || state == Direction.SOUTH){
-				switch(x.vState){
-				case YELLOW:
-					speed = 1;
-					break;
-				case RED: 
-					speed = 1;
-					break;
-				default:
-					break;
-				}
-			}		
 		}
+		if(state == Direction.NORTH || state == Direction.SOUTH){
+			go = x;
+			switch(x.vState){
+			case YELLOW:
+				speed = 1;
+				move2 = true;
+				break;
+			case RED: 
+				speed = 0;
+				move2 = true;
+				break;
+			default:
+				break;
+			}
+		}		
 	}
 }
+

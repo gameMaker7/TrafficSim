@@ -9,11 +9,10 @@ import greenfoot.GreenfootImage;
 public class Intersection extends Actor {
 
 	final static int SIZE = 50;
-	final static int RADIUS = 50;
+	final static int RADIUS = 60;
 	ArrayList<TrafficControl> close = new ArrayList<TrafficControl>();
 	ArrayList<TrafficControl> in = new ArrayList<TrafficControl>();
 	ArrayList<TrafficControl> approaching = new ArrayList<TrafficControl>();
-	ArrayList<TrafficControl> exiting = new ArrayList<TrafficControl>();
 	GreenfootImage image = new GreenfootImage(SIZE, SIZE);
 	Light hState = Light.GREEN;
 	Light vState = Light.RED;
@@ -25,7 +24,7 @@ public class Intersection extends Actor {
 	private Lights down;
 	private Lights right;
 	private Lights left;
-	private int wait = 400;;
+	private int wait = 400;
 
 	public  Intersection(int x, int y){
 		this.setImage(image);
@@ -46,7 +45,7 @@ public class Intersection extends Actor {
 			up.setImage("Images/trafficLightRed.png");
 		}
 		count ++;
-		 if(count == change){
+		if(count == change){
 			hState = Light.YELLOW;
 			left.setImage("Images/trafficLightYellow.png");
 			right.setImage("Images/trafficLightYellow.png");
@@ -89,8 +88,9 @@ public class Intersection extends Actor {
 		ArrayList<TrafficControl> a3 = (ArrayList<TrafficControl>) close.clone();
 		for(TrafficControl a: a3){
 			if(!a1.contains(a)){
-				close.remove(a);
 				a.leaving();
+				in.remove(a);
+				close.remove(a);
 			}
 		}
 		for(TrafficControl a: a1){
